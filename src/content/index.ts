@@ -1,9 +1,13 @@
-/* eslint-disable no-console */
-import { onMessage } from 'webext-bridge'
+chrome.runtime.onMessage.addListener(onMessageListener);
 
-console.info('[chrome-ext-mv3-starter] Hello world from content script')
-
-// communication example: send previous tab title from background page
-onMessage('tab-prev', ({ data }) => {
-  console.log(`[chrome-ext-mv3-starter] Navigate from page "${data.title}"`)
-})
+async function onMessageListener(request, sender, sendResponse) {
+  if (request.message === "pasteTempmailAddress") {
+    const { imboxAccount } = await chrome.storage.sync.get("imboxAccount");
+    const address = imboxAccount.email;
+    const element = document.activeElement.tagName;
+    if (element === "INPUT" || element === "TEXTAREA") {
+      document.activeElement.value = address;
+    }
+    sendResponse({ status: "ok" }); // Send a response back to the content script
+  }
+}

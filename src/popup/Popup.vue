@@ -1,19 +1,8 @@
 <template>
-  <main class="w-[300px] p-4">
-    <div class="">
-      email:
-      {{ email }}
-    </div>
-
-    <ul v-if="messages.length" class="mt-4 space-y-2">
-      <li v-for="message in messages" :key="message.id">
-        <p>
-          From: <strong> {{ message.from.address }}</strong>
-        </p>
-        <p>
-          Subject: <strong>{{ message.subject }}</strong>
-        </p>
-      </li>
+  <main class="w-[400px]">
+    <Navbar :emailAddress="email" />
+    <ul v-if="messages.length" class="divide-y divide-gray-100 mt-2">
+      <MessageCard v-for="message in messages" :key="message.id" :message="message" />
     </ul>
   </main>
 </template>
