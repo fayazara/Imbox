@@ -18,10 +18,6 @@ export default defineStore('imbox', () => {
     token.value = newToken
   }
 
-  async function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms))
-  }
-
   async function login() {
     try {
       loginLoading.value = true
@@ -40,9 +36,21 @@ export default defineStore('imbox', () => {
     }
   }
 
+  async function getMe() {
+    try {
+      const resp = await imbox.value.me()
+      if (resp.status) {
+        return resp.data
+      } else {
+        return null
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async function fetchMessages() {
     try {
-      await sleep(2000)
       const allMessages = await imbox.value.getMessages()
       if (allMessages.status) {
         messages.value = allMessages.data
@@ -63,15 +71,28 @@ export default defineStore('imbox', () => {
     }
   }
 
+  async function fetchMessage(messageId) {
+    try {
+      const message = await imbox.value.getMessage(messageId)
+      if (message.status) {
+        return message.data
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     imbox,
     email,
     password,
     token,
     messages,
+    messagesLoading,
     login,
     setUserData,
     fetchMessages,
-    messagesLoading
+    fetchMessage,
+    getMe
   }
 })

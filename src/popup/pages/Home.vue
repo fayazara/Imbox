@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2">
+  <div class="py-2">
     <div v-if="!imbox.messagesLoading">
       <ul v-if="messages.length" class="divide-y divide-gray-100 mt-2">
         <MessageCard v-for="message in messages" :key="message.id" :message="message" />

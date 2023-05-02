@@ -1,7 +1,7 @@
 <template>
   <li>
     <RouterLink
-      to="/"
+      :to="message.id"
       class="relative flex justify-between gap-x-6 p-2 hover:bg-slate-100 w-full text-left"
     >
       <div class="flex items-center gap-x-2">
@@ -11,7 +11,7 @@
           :alt="message.from.address"
         />
         <div class="min-w-0 flex-auto">
-          <p class="text-sm font-semibold text-gray-900">
+          <p class="font-semibold text-gray-900 truncate">
             {{ message.subject }}
           </p>
           <p class="flex text-xs text-gray-500">
@@ -21,7 +21,7 @@
       </div>
       <div class="flex items-center gap-x-2">
         <div class="flex sm:flex-col sm:items-end">
-          <p class="text-xs leading-5 text-gray-500">
+          <p class="text-xs leading-5 text-gray-500 flex-shrink-0">
             <UseTimeAgo v-slot="{ timeAgo }" :time="message.createdAt">
               {{ timeAgo }}
             </UseTimeAgo>

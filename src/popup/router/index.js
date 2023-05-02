@@ -13,6 +13,11 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: () => import('../pages/Settings.vue')
+    },
+    {
+      path: '/:messageId',
+      name: 'message',
+      component: () => import('../pages/Message.vue')
     }
   ]
 })
