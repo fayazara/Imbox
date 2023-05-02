@@ -13,6 +13,9 @@ dependencies:
   event-source-polyfill:
     specifier: ^1.0.31
     version: 1.0.31
+  vue-router:
+    specifier: '4'
+    version: 4.1.6(vue@3.2.47)
 
 devDependencies:
   '@antfu/eslint-config':
@@ -1019,6 +1022,10 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.47
       '@vue/shared': 3.2.47
+
+  /@vue/devtools-api@6.5.0:
+    resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
+    dev: false
 
   /@vue/reactivity-transform@3.2.47:
     resolution: {integrity: sha512-m8lGXw8rdnPVVIdIFhf0LeQ/ixyHkH5plYuS83yop5n7ggVJU+z5v0zecwEnX7fa7HNLBhh2qngJJkxpwEEmYA==}
@@ -4088,6 +4095,15 @@ packages:
       - '@vue/composition-api'
       - vue
     dev: true
+
+  /vue-router@4.1.6(vue@3.2.47):
+    resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      vue: 3.2.47
+    dev: false
 
   /vue@3.2.47:
     resolution: {integrity: sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==}

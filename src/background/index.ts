@@ -1,9 +1,8 @@
-import Mailjs from "~/services/mail"
+import Mailjs from "~/services/mail";
 
 chrome.runtime.onInstalled.addListener(async (): Promise<void> => {
   try {
-    // eslint-disable-next-line no-console
-    const mailjs = new Mailjs();
+    const mailjs: Mailjs = new Mailjs();
     const account = await mailjs.createOneAccount();
     if (account.status) {
       await mailjs.login(account.data.username, account.data.password);
@@ -13,31 +12,40 @@ chrome.runtime.onInstalled.addListener(async (): Promise<void> => {
           password: account.data.password,
           token: mailjs.token
         }
-      })
+      });
     }
-  } catch (error) {
-    throw new Error(error)
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error);
+    } else {
+      console.error(new Error("Unknown error occurred"));
+    }
   }
-})
+});
 
-
-let contextMenuItem = {
+const contextMenuItem: chrome.contextMenus.CreateProperties = {
   id: "pasteTempmailAddress",
   title: "Paste Tempmail Address",
-  contexts: ["all"],
+  contexts: ["all"]
 };
+
 chrome.contextMenus.create(contextMenuItem);
 
-chrome.contextMenus.onClicked.addListener(function (clickData) {
+chrome.contextMenus.onClicked.addListener(function (
+  clickData: chrome.contextMenus.OnClickData,
+  tab: chrome.tabs.Tab | undefined
+): void {
   console.log(clickData.menuItemId);
   if (clickData.menuItemId !== "pasteTempmailAddress") return;
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(
-      tabs[0].id,
-      { message: "pasteTempmailAddress" },
-      function (response) {
-        console.log(response); // Log the response received from the content script
-      }
-    );
-  });
+  if (!tab) {
+    console.error(new Error("No active tab found"));
+    return;
+  }
+  chrome.tabs.sendMessage(
+    tab.id,
+    { message: "pasteTempmailAddress" },
+    function (response) {
+      console.log(response);
+    }
+  );
 });

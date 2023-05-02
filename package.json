@@ -54,6 +54,7 @@
     "@cemalgnlts/mailjs": "^2.2.0",
     "@types/eventsource": "^1.1.11",
     "@vueuse/components": "^10.1.2",
-    "event-source-polyfill": "^1.0.31"
+    "event-source-polyfill": "^1.0.31",
+    "vue-router": "4"
   }
 }
