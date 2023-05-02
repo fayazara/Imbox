@@ -1,20 +1,49 @@
 <template>
-  <main class="w-[300px] px-4 py-5 text-center text-gray-700 dark:text-gray-200">
-    <img src="/assets/icon.svg" class="h-12 w-12 text-2xl mx-auto" />
-    <div>Popup</div>
-    <p class="mt-2 opacity-50">This is the popup page</p>
-    <button class="btn mt-2" @click="openOptionsPage">Open Options</button>
+  <main class="w-[300px] p-4">
+    <div class="">
+      email:
+      {{ email }}
+    </div>
 
-    <Footer />
-
-    <div class="mt-2"><span class="opacity-50">Storage:</span> {{ storageDemo }}</div>
+    <ul v-if="messages.length" class="mt-4 space-y-2">
+      <li v-for="message in messages" :key="message.id">
+        <p>
+          From: <strong> {{ message.from.address }}</strong>
+        </p>
+        <p>
+          Subject: <strong>{{ message.subject }}</strong>
+        </p>
+      </li>
+    </ul>
   </main>
 </template>
 
 <script setup lang="ts">
-import { storageDemo } from "~/logic/storage";
+import { onMounted, ref } from "vue";
+import Mailjs from "~/services/mail";
+import { transformIncomingMessage } from "~/utils/messages";
+const email = ref("");
+const password = ref("");
+const token = ref("");
+const messages = ref([]);
 
-function openOptionsPage() {
-  chrome.runtime.openOptionsPage();
-}
+onMounted(async () => {
+  try {
+    const mailjs = new Mailjs();
+    const { imboxAccount } = await chrome.storage.sync.get("imboxAccount");
+    if (imboxAccount) {
+      await mailjs.loginWithToken(imboxAccount.token);
+      email.value = imboxAccount.email;
+      password.value = imboxAccount.password;
+      token.value = imboxAccount.token;
+      const allMessages = await mailjs.getMessages();
+      if (allMessages.status) {
+        messages.value = allMessages.data;
+      }
+      mailjs.on("arrive", (msg) => messages.value.unshift(transformIncomingMessage(msg)));
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
