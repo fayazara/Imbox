@@ -1,6 +1,9 @@
 <template>
   <li>
-    <button class="relative flex justify-between gap-x-6 p-2 hover:bg-slate-100 w-full">
+    <RouterLink
+      to="/"
+      class="relative flex justify-between gap-x-6 p-2 hover:bg-slate-100 w-full text-left"
+    >
       <div class="flex items-center gap-x-2">
         <img
           class="h-8 w-8 flex-none rounded-full bg-gray-50"
@@ -37,10 +40,11 @@
           ></path>
         </svg>
       </div>
-    </button>
+    </RouterLink>
   </li>
 </template>
 <script setup>
+import { RouterLink } from "vue-router";
 import { UseTimeAgo } from "@vueuse/components";
 const props = defineProps({
   message: {
