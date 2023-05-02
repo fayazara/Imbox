@@ -34,7 +34,7 @@ export async function getManifest(): Promise<Manifest.WebExtensionManifest> {
       128: './assets/icon-512.png'
     },
     permissions: ['contextMenus', 'storage'],
-    optional_permissions: ['*://*/*'],
+    optional_permissions: ['tabs'],
     content_security_policy: {}
   }
 

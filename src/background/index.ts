@@ -1,41 +1,21 @@
-import { sendMessage, onMessage } from 'webext-bridge'
+import Mailjs from "~/services/mail"
 
-chrome.runtime.onInstalled.addListener((): void => {
-  // eslint-disable-next-line no-console
-  console.log('Extension installed')
-})
-
-let previousTabId = 0
-
-// communication example: send previous tab title from background page
-// see shim.d.ts for type decleration
-chrome.tabs.onActivated.addListener(async ({ tabId }) => {
-  if (!previousTabId) {
-    previousTabId = tabId
-    return
-  }
-  const tab = await chrome.tabs.get(previousTabId)
-  previousTabId = tabId
-  if (!tab) return
-
-  // eslint-disable-next-line no-console
-  console.log('previous tab', tab)
-  sendMessage(
-    'tab-prev',
-    { title: tab.title },
-    { context: 'content-script', tabId }
-  )
-})
-
-onMessage('get-current-tab', async () => {
+chrome.runtime.onInstalled.addListener(async (): Promise<void> => {
   try {
-    const tab = await chrome.tabs.get(previousTabId)
-    return {
-      title: tab?.id
+    // eslint-disable-next-line no-console
+    const mailjs = new Mailjs();
+    const account = await mailjs.createOneAccount();
+    if (account.status) {
+      await mailjs.login(account.data.username, account.data.password);
+      await chrome.storage.sync.set({
+        imboxAccount: {
+          email: account.data.username,
+          password: account.data.password,
+          token: mailjs.token
+        }
+      })
     }
-  } catch {
-    return {
-      title: undefined
-    }
+  } catch (error) {
+    throw new Error(error)
   }
 })

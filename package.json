@@ -1,7 +1,7 @@
 {
-  "name": "v-extension",
-  "displayName": "VExtension",
-  "description": "Vue 3, Vite and Tailwind css Extension starter",
+  "name": "imbox",
+  "displayName": "Imbox",
+  "description": "Disposable email inbox in your browser",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -49,5 +49,10 @@
     "vue-demi": "^0.13.11",
     "vue-global-api": "^0.4.1",
     "webext-bridge": "^5.0.5"
+  },
+  "dependencies": {
+    "@cemalgnlts/mailjs": "^2.2.0",
+    "@types/eventsource": "^1.1.11",
+    "event-source-polyfill": "^1.0.31"
   }
 }
