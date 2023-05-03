@@ -6,7 +6,10 @@
       </ul>
       <EmptyInbox v-else :email="imbox.email" />
     </div>
-    <div class="p-8 bg-slate-100 flex items-center space-x-2 justify-center" v-else>
+    <div
+      class="p-8 h-80 -my-2 bg-slate-100 flex items-center space-x-2 justify-center"
+      v-else
+    >
       <SvgSpinners180RingWithBg class="h-6 w-6 text-sky-600" />
       <p class="text-sm">Fetching Messages...</p>
     </div>

@@ -25,7 +25,7 @@ export default defineStore('imbox', () => {
       const mailjsInstance = new Mailjs()
       const { imboxAccount } = await chrome.storage.sync.get('imboxAccount')
       if (!imboxAccount) {
-        return
+        throw new Error('imboxAccount is missing')
       }
       await mailjsInstance.loginWithToken(imboxAccount.token)
       imbox.value = mailjsInstance
@@ -38,6 +38,9 @@ export default defineStore('imbox', () => {
 
   async function getMe() {
     try {
+      if (!imbox.value) {
+        throw new Error('imbox is missing')
+      }
       const resp = await imbox.value.me()
       if (resp.status) {
         return resp.data
@@ -51,6 +54,9 @@ export default defineStore('imbox', () => {
 
   async function fetchMessages() {
     try {
+      if (!imbox.value) {
+        throw new Error('imbox is missing')
+      }
       const allMessages = await imbox.value.getMessages()
       if (allMessages.status) {
         messages.value = allMessages.data
@@ -73,6 +79,9 @@ export default defineStore('imbox', () => {
 
   async function fetchMessage(messageId) {
     try {
+      if (!imbox.value) {
+        throw new Error('imbox is missing')
+      }
       const message = await imbox.value.getMessage(messageId)
       if (message.status) {
         return message.data

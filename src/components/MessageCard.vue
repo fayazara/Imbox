@@ -6,8 +6,8 @@
     >
       <div class="flex items-center gap-x-2">
         <img
-          class="h-8 w-8 flex-none rounded-full bg-gray-50"
-          :src="`https://api.dicebear.com/6.x/initials/svg?seed=${message.from.address}&radius=50`"
+          class="h-8 w-8 flex-none"
+          :src="`https://api.dicebear.com/6.x/initials/svg?seed=${message.from.address}&radius=15&backgroundColor=b6e3f4,c0aede,d1d4f9&textColor=334155&fontSize=40`"
           :alt="message.from.address"
         />
         <div class="min-w-0 flex-auto">

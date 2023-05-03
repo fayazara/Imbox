@@ -1,7 +1,10 @@
 <template>
   <main class="w-[400px]">
     <Navbar />
-    <RouterView />
+    <div class="h-80 overflow-y-scroll">
+      <RouterView />
+    </div>
+    <Footer />
   </main>
 </template>
 <script setup>

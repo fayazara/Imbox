@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/:messageId',
       name: 'message',
       component: () => import('../pages/Message.vue')
+    },
+    {
+      path: '/info',
+      name: 'info',
+      component: () => import('../pages/Information.vue')
     }
   ]
 })
