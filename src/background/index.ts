@@ -22,30 +22,3 @@ chrome.runtime.onInstalled.addListener(async (): Promise<void> => {
     }
   }
 });
-
-const contextMenuItem: chrome.contextMenus.CreateProperties = {
-  id: "pasteTempmailAddress",
-  title: "Paste Tempmail Address",
-  contexts: ["all"]
-};
-
-chrome.contextMenus.create(contextMenuItem);
-
-chrome.contextMenus.onClicked.addListener(function (
-  clickData: chrome.contextMenus.OnClickData,
-  tab: chrome.tabs.Tab | undefined
-): void {
-  console.log(clickData.menuItemId);
-  if (clickData.menuItemId !== "pasteTempmailAddress") return;
-  if (!tab) {
-    console.error(new Error("No active tab found"));
-    return;
-  }
-  chrome.tabs.sendMessage(
-    tab.id,
-    { message: "pasteTempmailAddress" },
-    function (response) {
-      console.log(response);
-    }
-  );
-});
