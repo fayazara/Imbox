@@ -1,3 +1,5 @@
+[<img src="https://github.com/user-attachments/assets/60e89805-26fd-4074-8ced-447fb148c7e6">](http://supersaas.dev?ref=github)
+
 # Imbox
 
 A chrome extension with with disposable inboxes right inside your browser.
